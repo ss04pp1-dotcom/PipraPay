@@ -4,9 +4,12 @@ RUN apt-get update && apt-get install -y \
     zip unzip curl libpng-dev \
     libonig-dev libxml2-dev \
     libzip-dev libgd-dev \
+    libmagickwand-dev --no-install-recommends \
     && docker-php-ext-install \
     pdo_mysql mbstring bcmath \
-    zip gd opcache
+    zip gd opcache \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick
 
 RUN a2enmod rewrite
 
