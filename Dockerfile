@@ -11,12 +11,14 @@ RUN apt-get update && apt-get install -y \
     && pecl install imagick \
     && docker-php-ext-enable imagick
 
-RUN a2enmod rewrite
+RUN a2enmod rewrite headers
 
 RUN echo '<Directory /var/www/html>\n\
     AllowOverride All\n\
     Require all granted\n\
 </Directory>' >> /etc/apache2/apache2.conf
+
+RUN echo 'RequestHeader set X-Forwarded-Proto "https"' >> /etc/apache2/apache2.conf
 
 WORKDIR /var/www/html
 COPY . .
